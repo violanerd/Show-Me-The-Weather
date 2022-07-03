@@ -16,24 +16,28 @@
     </div>    
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2 border-primary">
+            <div class="col-sm-3 col-12 border-primary d-flex justify-content-center">
                 <div id="form">
-                    <button class="w-100">Test</button>
-                    <button class="w-100">Test</button>
-                    <button class="w-100">Test</button>
-                    <button class="w-100">Test</button>
-                    <button class="w-100">Test</button>
+                    <h3 class="text-center">Search for a City:</h3>
+                    <input class="w-75 m-3"type="text" id="city-name" placeholder="...type in a city"></label>
+                    <button class="w-75 m-3" id="submit">Submit</button>
+                    <hr>
+                    <button class="w-75 m-3">Test</button>
+                    <button class="w-75 m-3">Test</button>
+                    <button class="w-75 m-3">Test</button>
+                    <button class="w-75 m-3">Test</button>
                 </div>
             </div>
-            <div class="col-10 border-primary">
+            <div class="col-sm-9 col-12 border-primary">
                 <div id="current-weather">
-                    <h4>THIS WILL BE THE CURRENT WEATHER</h4>
+                    <div id="current-display"></div>
                     <p>weather</p>
                     <p>wind</p>
                     <p>uv index</p>
                     <p>img</p>
                 </div>
                 <div id="5-day-forecast" class="d-flex flex-wrap justify-content-around">
+                    <h4 class="w-100">5-Day Forecast:</h4>
                     <div>Day 1</div>
                     <div>Day 2</div>
                     <div>Day 3</div>
@@ -44,7 +48,7 @@
         </div>
         
     </div>
-    <!--addback <div id="sample-display"></div> -->
+  
    
     <script src="./assets/js/script.js"></script>
 </body>
