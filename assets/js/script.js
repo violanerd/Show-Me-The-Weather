@@ -49,8 +49,9 @@ function displayWeather(data){
     var weatherImgContEl = document.createElement("span");
     weatherImgContEl.textContent = currentDay;
     var weatherImgEl = document.createElement("img");
-    weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/02d@2x.png"); 
-    // this is hardcoded, change it to a variable
+    var icon = data.weather[0].icon;
+    weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png"); 
+   // check that this works in the header
 
     weatherImgContEl.appendChild(weatherImgEl);
     weatherEl.appendChild(weatherImgContEl);
@@ -107,7 +108,7 @@ function displayUVandForecast(data) {
         var divDay = "#day" + i;
         var forecastEl = document.querySelector(divDay);
         forecastEl.setAttribute("class", "daily-forecast");
-        
+
         var dateData = arrayDaily[i].dt;
         var currentDay = getTheDate(dateData);
         
