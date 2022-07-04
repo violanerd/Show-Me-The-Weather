@@ -101,7 +101,8 @@ function get5Day(lat, lon){
 
 function displayUVandForecast(data) {
     var uvData = data.current.uvi;
-    uvEl.textContent = "UV Index: " + uvData + " create array to do color coding";
+    uvEl.textContent = uvData;
+    checkUV(uvData);
 
     var arrayDaily = data.daily
     for (var i=1; i < 6; i++){
@@ -136,13 +137,25 @@ function displayUVandForecast(data) {
         humidityEl.textContent = "Humidity: " + humidity + "%";
         forecastEl.appendChild(humidityEl);
 
-    }
-    
- 
+    } 
 }
 
-
-
+function checkUV (num) {
+    uvEl.setAttribute("style", "padding: 0.2rem");
+    if (num > 7 && num <= 15){
+        uvEl.setAttribute("style", "background-color: red");
+        return;
+    } else if (num > 5 && num <= 7){
+        uvEl.setAttribute("style", "background-color: orange");
+        return;
+    } else if (num > 3 && num <= 5){
+        uvEl.setAttribute("style", "background-color: yellow");
+        return;
+    } else {
+        uvEl.setAttribute("style", "background-color: green");
+        return;
+    }  
+}
 
 formEl.addEventListener("click", buttonHandler);
 
