@@ -6,6 +6,7 @@ var formEl = document.querySelector("#form");
 var windEl = document.querySelector("#wind");
 var tempEl = document.querySelector("#temp");
 var humidityEl = document.querySelector("#humidity");
+var uvEl = document.querySelector("#uv-index");
 
 function buttonHandler(event) {
     if (event.target.id === "submit"){
@@ -21,7 +22,7 @@ function getWeather(city){
     fetch(apiURL).then(function(response){
         if (response.ok) {
             response.json().then(function(data){
-                console.log(data);
+                
                 displayWeather(data);
             });
         } else {
@@ -39,7 +40,8 @@ function displayWeather(data){
     }
     var currentDay = getTheDate(data);
     var cityName = data.name;
-
+    var lat = data.coord["lat"];
+    var lon = data.coord["lon"];
     var weatherEl = document.createElement("h3");
     weatherEl.textContent = cityName + " ";
     
@@ -47,7 +49,8 @@ function displayWeather(data){
     weatherImgContEl.textContent = currentDay;
     var weatherImgEl = document.createElement("img");
     weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/02d@2x.png"); 
-    
+    // this is hardcoded, change it to a variable
+
     weatherImgContEl.appendChild(weatherImgEl);
     weatherEl.appendChild(weatherImgContEl);
     containerEl.appendChild(weatherEl);
@@ -61,11 +64,13 @@ function displayWeather(data){
     
     var humidity = data.main.humidity;
     humidityEl.textContent = "Humidity: " + humidity + "%";
+
+    get5Day(lat,lon);
     
 }
 
 
-//"https://openweathermap.org/img/wn/" + icon "@2x.png"
+
 
 function getTheDate (data) {
     var dateData = data.dt;
@@ -76,13 +81,14 @@ function getTheDate (data) {
     var current_day = ("(" + day + "/" + month + "/" + year + ")");
     return current_day;
 }
-function get5Day(){
-    apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=29.7633&lon=-95.3633&exclude=minutely,hourly,alerts" + "&appid=" + apiKey + "&units=imperial";
+
+function get5Day(lat, lon){
+    apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts" + "&appid=" + apiKey + "&units=imperial";
     fetch(apiURL).then(function(response){
         if (response.ok) {
             response.json().then(function(data){
                 console.log(data);
-                
+                displayUVandForecast(data);
             });
         } else {
             alert("Error: City not found");
@@ -93,6 +99,13 @@ function get5Day(){
     });
 }
 
-get5Day(); // hardcoded lat and lon - use the first call to get lat and long AND UV index
+function displayUVandForecast(data) {
+    var uvData = data.current.uvi;
+    uvEl.textContent = "UV Index: " + uvData + " where to get the image";
+}
+
+
+
+
 formEl.addEventListener("click", buttonHandler);
 
