@@ -38,7 +38,8 @@ function displayWeather(data){
     if (data.length === 0) {
         // do something
     }
-    var currentDay = getTheDate(data);
+    var dateData = data.dt;
+    var currentDay = getTheDate(dateData);
     var cityName = data.name;
     var lat = data.coord["lat"];
     var lon = data.coord["lon"];
@@ -70,15 +71,14 @@ function displayWeather(data){
 }
 
 
-
-
-function getTheDate (data) {
-    var dateData = data.dt;
+function getTheDate (dateData) {
+    
     var date = new Date(dateData * 1000);
     var day = date.getDate();
-    var month = date.getMonth();
+    var month = (date.getMonth()) + 1;
+    // month starts counting at 0
     var year = date.getFullYear();
-    var current_day = ("(" + day + "/" + month + "/" + year + ")");
+    var current_day = ("(" + month + "/" + day + "/" + year + ")");
     return current_day;
 }
 
@@ -87,7 +87,6 @@ function get5Day(lat, lon){
     fetch(apiURL).then(function(response){
         if (response.ok) {
             response.json().then(function(data){
-                console.log(data);
                 displayUVandForecast(data);
             });
         } else {
@@ -101,7 +100,44 @@ function get5Day(lat, lon){
 
 function displayUVandForecast(data) {
     var uvData = data.current.uvi;
-    uvEl.textContent = "UV Index: " + uvData + " where to get the image";
+    uvEl.textContent = "UV Index: " + uvData + " create array to do color coding";
+
+    var arrayDaily = data.daily
+    for (var i=1; i < 6; i++){
+        var divDay = "#day" + i;
+        var forecastEl = document.querySelector(divDay);
+        forecastEl.setAttribute("class", "daily-forecast");
+        
+        var dateData = arrayDaily[i].dt;
+        var currentDay = getTheDate(dateData);
+        
+        var dateEl = document.createElement("h5");
+        dateEl.textContent = currentDay;
+        forecastEl.appendChild(dateEl);
+
+        var weatherImgEl = document.createElement("img");
+        var icon = arrayDaily[i].weather[0].icon;
+        weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png"); 
+        forecastEl.appendChild(weatherImgEl);
+
+        var tempEl = document.createElement("p");
+        var temp = arrayDaily[i].temp.max;
+        tempEl.innerHTML = "Temperature: " + temp + '&#8457';
+        forecastEl.appendChild(tempEl);
+
+        var windEl = document.createElement("p");
+        var wind = arrayDaily[i].wind_speed;
+        windEl.textContent = "Wind: " + wind + " MPH";
+        forecastEl.appendChild(windEl);
+
+        var humidityEl = document.createElement("p");
+        var humidity = arrayDaily[i].humidity;
+        humidityEl.textContent = "Humidity: " + humidity + "%";
+        forecastEl.appendChild(humidityEl);
+
+    }
+    
+ 
 }
 
 
