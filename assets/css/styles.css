@@ -4,3 +4,12 @@
     font-size: 14px;
     padding: .5rem;
 }
+
+h1 {
+    text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.gradient {
+    background-color: green;
+    background-image: linear-gradient(green, lightgreen);
+}

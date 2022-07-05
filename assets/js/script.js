@@ -7,13 +7,23 @@ var windEl = document.querySelector("#wind");
 var tempEl = document.querySelector("#temp");
 var humidityEl = document.querySelector("#humidity");
 var uvEl = document.querySelector("#uv-index");
+var buttonEl = document.querySelector("#button");
 
 function buttonHandler(event) {
     if (event.target.id === "submit"){
-        // add some logic if the city doesn't work... where?
+        // add a new city to the search History
         var city = formSubmitEl.value.trim();
+        searchHistory.push(city);
+        updateSearchHistory();
+        var newButton = document.createElement("button");
+        newButton.setAttribute("class", "w-75 m-3");
+        newButton.textContent = city
+        buttonEl.appendChild(newButton);
         getWeather(city);
-    };
+    } else {
+        var city = event.target.innerHTML;
+        getWeather(city);
+    }
 }
 
 
@@ -35,9 +45,7 @@ function getWeather(city){
 }
 
 function displayWeather(data){
-    if (data.length === 0) {
-        // do something
-    }
+    
     var dateData = data.dt;
     var currentDay = getTheDate(dateData);
     var cityName = data.name;
@@ -51,7 +59,6 @@ function displayWeather(data){
     var weatherImgEl = document.createElement("img");
     var icon = data.weather[0].icon;
     weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png"); 
-   // check that this works in the header
 
     weatherImgContEl.appendChild(weatherImgEl);
     weatherEl.appendChild(weatherImgContEl);
@@ -157,5 +164,35 @@ function checkUV (num) {
     }  
 }
 
-formEl.addEventListener("click", buttonHandler);
+// search history
+var searchHistory = [];
+
+// display search history
+function displaySearchHistory (cities) {
+    for (var i = 0; i < cities.length; i++) {
+        var newButton = document.createElement("button");
+        newButton.setAttribute("class", "w-75 m-3");
+        newButton.textContent = cities[i];
+        buttonEl.appendChild(newButton);
+        searchHistory.push(cities[i]);
+    }
+}
+// local storage
+function updateSearchHistory () {
+    localStorage.setItem("cities", JSON.stringify(searchHistory));
+}
+
+function loadSearchHistory () {
+    var getCities = JSON.parse(localStorage.getItem("cities"));
+
+    if (!getCities){
+        return;
+    } else {
+        displaySearchHistory(getCities);
+    }
+}
+
+loadSearchHistory();
+
+buttonEl.addEventListener("click", buttonHandler);
 
