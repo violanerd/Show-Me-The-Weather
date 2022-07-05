@@ -11,19 +11,20 @@ On the project learning:
 
 
 Challenges:
-* Navigating API documentation 
+* Navigating API documentation for correct base url
+* Clearing HTML data; reading documentation on innerHTML solved this quickly 
 
 ## Built With
 * Javascript, HTML, CSS, Bootstrap
  
 
 ## Website
-Visit the [project](https://violanerd.github.io/my-work-day/)
+Visit the [project](https://violanerd.github.io/Show-Me-The-Weather/)
 
-<a href="https://violanerd.github.io/my-work-day/">
-<img src="./assets/images/WorkDayScreenShot.png" alt="WorkDay">
+<a href="https://violanerd.github.io/Show-Me-The-Weather/">
+<img src="./assets/images/weatherapp.png" alt="Weather App">
 </a>
 
 ## Contribution
 
-Developed by Madalyne Cross
+Coded by Madalyne Cross
