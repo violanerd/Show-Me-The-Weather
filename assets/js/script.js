@@ -1,9 +1,6 @@
 var testCity = 'houston';
 var apiKey = '5ad9ea946b69e95a9e1f81b039026e5a';
 var containerEl = document.querySelector("#current-display");
-var cityEl = document.querySelector("#city");
-var dateEl = document.querySelector("#date");
-var iconEl = document.querySelector("#icon");
 var formSubmitEl = document.querySelector("#city-name");
 var formEl = document.querySelector("#form");
 var windEl = document.querySelector("#wind");
@@ -19,7 +16,7 @@ function buttonHandler(event) {
         searchHistory.push(city);
         updateSearchHistory();
         var newButton = document.createElement("button");
-        newButton.setAttribute("class", "w-75 m-3");
+        newButton.setAttribute("class", "w-75 m-3 btn btn-info");
         newButton.textContent = city
         buttonEl.appendChild(newButton);
         getWeather(city);
@@ -55,13 +52,20 @@ function displayWeather(data){
     var lat = data.coord["lat"];
     var lon = data.coord["lon"];
 
-
-    cityEl.textContent = cityName + " ";
-    dateEl.textContent = currentDay;
-    var icon = data.weather[0].icon;
-    iconEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png"); 
-
+    var weatherEl = document.createElement("h3");
+    weatherEl.textContent = cityName + " ";
     
+    var weatherImgContEl = document.createElement("span");
+    weatherImgContEl.textContent = currentDay;
+    
+    var icon = data.weather[0].icon;
+    var weatherImgEl = document.createElement("img");
+    weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png");
+
+    containerEl.innerHTML = "";
+    weatherImgContEl.appendChild(weatherImgEl);
+    weatherEl.appendChild(weatherImgContEl);
+    containerEl.appendChild(weatherEl);
   
 
     // Static display, dynamic content
@@ -172,7 +176,7 @@ var searchHistory = [];
 function displaySearchHistory (cities) {
     for (var i = 0; i < cities.length; i++) {
         var newButton = document.createElement("button");
-        newButton.setAttribute("class", "w-75 m-3");
+        newButton.setAttribute("class", "w-75 m-3 btn btn-info");
         newButton.textContent = cities[i];
         buttonEl.appendChild(newButton);
         searchHistory.push(cities[i]);
