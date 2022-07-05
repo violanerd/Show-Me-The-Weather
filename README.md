@@ -22,7 +22,7 @@ Challenges:
 Visit the [project](https://violanerd.github.io/Show-Me-The-Weather/)
 
 <a href="https://violanerd.github.io/Show-Me-The-Weather/">
-<img src="./assets/images/weatherapp.png" alt="Weather App">
+<img src="./assets/images/weatherpreview.png" alt="Weather App">
 </a>
 
 ## Contribution
