@@ -1,6 +1,9 @@
 var testCity = 'houston';
 var apiKey = '5ad9ea946b69e95a9e1f81b039026e5a';
 var containerEl = document.querySelector("#current-display");
+var cityEl = document.querySelector("#city");
+var dateEl = document.querySelector("#date");
+var iconEl = document.querySelector("#icon");
 var formSubmitEl = document.querySelector("#city-name");
 var formEl = document.querySelector("#form");
 var windEl = document.querySelector("#wind");
@@ -51,18 +54,15 @@ function displayWeather(data){
     var cityName = data.name;
     var lat = data.coord["lat"];
     var lon = data.coord["lon"];
-    var weatherEl = document.createElement("h3");
-    weatherEl.textContent = cityName + " ";
-    
-    var weatherImgContEl = document.createElement("span");
-    weatherImgContEl.textContent = currentDay;
-    var weatherImgEl = document.createElement("img");
-    var icon = data.weather[0].icon;
-    weatherImgEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png"); 
 
-    weatherImgContEl.appendChild(weatherImgEl);
-    weatherEl.appendChild(weatherImgContEl);
-    containerEl.appendChild(weatherEl);
+
+    cityEl.textContent = cityName + " ";
+    dateEl.textContent = currentDay;
+    var icon = data.weather[0].icon;
+    iconEl.setAttribute("src", "https://openweathermap.org/img/wn/" + icon + "@2x.png"); 
+
+    
+  
 
     // Static display, dynamic content
     var wind = data.wind.speed;
@@ -116,6 +116,7 @@ function displayUVandForecast(data) {
         var divDay = "#day" + i;
         var forecastEl = document.querySelector(divDay);
         forecastEl.setAttribute("class", "daily-forecast");
+        forecastEl.innerHTML="";
 
         var dateData = arrayDaily[i].dt;
         var currentDay = getTheDate(dateData);
@@ -192,7 +193,9 @@ function loadSearchHistory () {
     }
 }
 
+getWeather("Houston");
 loadSearchHistory();
+
 
 buttonEl.addEventListener("click", buttonHandler);
 
